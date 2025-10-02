@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product Landing Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    /* Navbar container */
+    nav {
+      background-color: #6f42c1; /* purple shade */
+      color: white;
+      padding: 1rem 2rem;
+      position: relative;
+    }
+    nav .nav-headings {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .nav-headings h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    nav .nav-headings .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-weight: bold;
+    }
+    nav .nav-headings .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+/* Logout Button */
+.btn-logout {
+  background: linear-gradient(135deg, #ff4b5c, #ff6b81);
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(255, 75, 92, 0.4);
+}
+.btn-logout:hover {
+  background: linear-gradient(135deg, #ff6b81, #ff4b5c);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 75, 92, 0.6);
+}
+
+    nav .nav-headings .nav-links a:hover {
+      text-decoration: underline;
+    }
+    /* Search bar container at bottom center of nav */
+    nav .search-container {
+      position: absolute;
+      bottom: -40px; /* places search below nav */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      display: flex;
+      overflow: hidden;
+    }
+    nav .search-container input[type="text"] {
+      flex: 1;
+      border: none;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border-radius: 20px 0 0 20px;
+      outline: none;
+    }
+    nav .search-container button {
+      background-color: #9b59b6;
+      border: none;
+      color: white;
+      padding: 0 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 0 20px 20px 0;
+      transition: background-color 0.3s;
+    }
+    nav .search-container button:hover {
+      background-color: #884dbe;
+    }
+    /* Add some padding below nav to accommodate search bar */
+    header {
+      padding-bottom: 60px;
+    }
+    /* Homepage heading */
+    main {
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    main h2 {
+      font-size: 2.5rem;
+      color: #6f42c1;
+    }
+    main h1 {
+      font-size: 1.5rem;
+      color: #6f42c1;
+    }
+/* Products Section */
+.products {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;   /* Push boxes toward bottom */
+  gap: 30px;              /* Space between boxes */
+  padding: 40px 20px;
+  min-height: 10vh;       /* So boxes stay lower on page */
+  background: #fff;
+}
+
+/* Each Product Card */
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(255, 182, 193, 0.8);
+  text-align: center;
+  transition: transform 0.3s;
+  width: 180px;            /* Medium size box */
+}
+
+.card img {
+  width: 120px;            /* Medium image */
+  height: auto;
+  margin-bottom: 10px;
+  object-fit: contain;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="nav-headings">
+        <h1>Smart point</h1>
+        <div class="nav-links">
+           <!-- 🔹 Profile & Logout -->
+        <li id="profileSection" style="display:none;">
+          <span id="welcomeName"></span>
+          <button id="logoutBtn" class="btn-logout">Logout</button>
+        </li>
+        </div>
+      </div>
+      <form class="search-container" onsubmit="handleSearch(event)">
+        <input type="text" placeholder="Search..." name="search" required />
+        <button type="submit">Search</button>
+      </form>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Welcome to Our Product Landing Page</h2>
+     <h1> Available only Two Products.. </h1>
+  </main>
+ <section class="products">
+  <div class="card">
+    <img src="pictures/watch.png" alt="Watch Product" />
+    <h3>Watch Product</h3>
+  </div>
+
+  <div class="card">
+    <img src="pictures/phone.png" alt="Mobile Product" />
+    <h3>Mobile Product</h3>
+  </div>
+</section>
+
+  <script src="script.js"></script>
+
+  <!-- 🔹 Supabase Auth Script -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    const SUPABASE_URL = "https://yqcfgibzaideatrmvnvi.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxY2ZnaWJ6YWlkZWF0cm12bnZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk0MTk4ODEsImV4cCI6MjA3NDk5NTg4MX0.pRYlFcopxyDIuFattGFlciAzPSbR9m8KM4tOD-DqHno";
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function checkUser(){
+      const { data: { user } } = await supabaseClient.auth.getUser();
+
+      if(user){
+        document.getElementById("welcomeName").innerText =
+          "Hello, " + (user.user_metadata.full_name || user.email);
+        document.getElementById("profileSection").style.display = "inline-block";
+      } else {
+        // Not logged in → back to signup
+        window.location.href = "index.html";
+      }
+    }
+
+    async function logoutUser(){
+      await supabaseClient.auth.signOut();
+      window.location.href = "index.html";
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", logoutUser);
+
+    // Run on load
+    checkUser();
+function handleSearch(event) {
+  event.preventDefault();
+  const query = event.target.search.value.trim().toLowerCase();
+  if (query === "watch") {
+    window.location.href = "landing.html";
+  } else if (query === "phone") {
+    window.location.href = "phone page.html";
+  } else {
+    // Optional: handle other search queries or show a message
+    alert("No results found for: " + query);
+  }
+}
+  </script>
+</body>
+</html>
