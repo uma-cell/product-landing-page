@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Rating with Top Falling Balls</title>
+<style>
+body {
+  background: linear-gradient(135deg, #ce9ffc 0%, #f9c776 100%);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.container {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 28px rgba(144, 68, 180, 0.2);
+  padding: 40px 32px;
+  width: 320px;
+  text-align: center;
+  z-index: 10;
+  position: relative;
+}
+
+.container a {
+  text-decoration: none;
+  background: #ff4b5c;
+  color: #fff;
+  padding: 12px 25px;
+  border-radius: 30px;
+  transition: 0.3s;
+}
+
+.container a:hover {
+  background: #d93a4e;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.star {
+  color: lightgray;
+  transition: color 0.2s;
+}
+
+.star.selected {
+  color: #a259e8;
+  text-shadow: 0 0 8px #ea80fc; 
+}
+
+#rating-value {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.ball {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.7;
+  pointer-events: none;
+  top: -30px; /* start from top */
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(110vh); }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>How was your experience?</h2>
+  <div class="stars" id="stars">
+    <span class="star" data-value="1">&#9733;</span>
+    <span class="star" data-value="2">&#9733;</span>
+    <span class="star" data-value="3">&#9733;</span>
+    <span class="star" data-value="4">&#9733;</span>
+    <span class="star" data-value="5">&#9733;</span>
+  </div>
+  <a href="watch.html">Go Back To watch_Page!</a>
+  <div id="rating-value">0 of 5</div>
+</div>
+
+<script>
+// Star rating logic
+const stars = document.querySelectorAll(".star");
+const ratingValue = document.getElementById("rating-value");
+let currentRating = 0;
+
+stars.forEach(star => {
+  star.addEventListener("click", () => {
+    currentRating = star.getAttribute("data-value");
+    updateStars(currentRating);
+    ratingValue.textContent = currentRating + " of 5";
+  });
+});
+
+function updateStars(rating) {
+  stars.forEach(star => {
+    if (star.getAttribute("data-value") <= rating) {
+      star.classList.add("selected");
+    } else {
+      star.classList.remove("selected");
+    }
+  });
+}
+
+// Falling balls logic
+const colors = ["#ff4b5c", "#ff9f1c", "#2ec4b6", "#a259e8", "#ff6b6b", "#ffd93d"];
+const numBalls = 30;
+
+for (let i = 0; i < numBalls; i++) {
+  const ball = document.createElement("div");
+  ball.classList.add("ball");
+  const size = Math.random() * 15 + 10; // 10px - 25px
+  ball.style.width = size + "px";
+  ball.style.height = size + "px";
+  ball.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+  ball.style.left = Math.random() * 100 + "vw";
+  ball.style.animationDuration = (4 + Math.random() * 6) + "s";
+  ball.style.animationDelay = Math.random() * 3 + "s";
+  document.body.appendChild(ball);
+}
+</script>
+
+</body>
+</html>

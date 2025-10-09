@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Smart Watch</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #fe8fc9, #b47cff 120%);
+    }
+
+    /* Container for illustration + form */
+    .login-wrapper {
+      display: flex;
+      background: white;
+      width: 800px;
+      max-width: 90%;
+      border-radius: 16px;
+      box-shadow: 0 6px 22px rgba(255, 255, 255, 0.6);
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Left illustration column */
+    .illustration {
+      flex: 1;
+      background: #f3f0ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .illustration img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Right form column */
+    .form-container {
+      flex: 1;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #a020f0;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+    button {
+      background: linear-gradient(90deg, #ff59c7 33%, #b47cff 100%);
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #b47cff 33%, #ff59c7 100%);
+    }
+    p {
+      text-align: center;
+      margin-top: 10px;
+      color: #333;
+    }
+    a {
+      color: #a020f0;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Falling Login Text */
+    .falling-text {
+      position: absolute;
+      font-size: 30px;
+      font-weight: bold;
+      color: #ffffff;
+      pointer-events: none;
+      animation: fall 6s linear infinite;
+      z-index: 1;
+    }
+    @keyframes fall {
+      0% { top: -50px; opacity: 1; }
+      100% { top: 100vh; opacity: 0; }
+    }
+
+    @media (max-width: 700px) {
+      .login-wrapper {
+        flex-direction: column;
+        width: 95%;
+      }
+      .illustration {
+        display: none; /* hide image on small screens */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Falling Login words -->
+  <div class="falling-text" style="left:10%; animation-delay:0s;">Login</div>
+  <div class="falling-text" style="left:30%; animation-delay:1s;">Login</div>
+  <div class="falling-text" style="left:50%; animation-delay:2s;">Login</div>
+  <div class="falling-text" style="left:70%; animation-delay:3s;">Login</div>
+  <div class="falling-text" style="left:85%; animation-delay:4s;">Login</div>
+
+  <!-- Main Login Box -->
+  <div class="login-wrapper">
+    <!-- Left Image -->
+    <div class="illustration">
+      <img src="https://img.freepik.com/free-vector/student-login-concept-illustration_114360-7967.jpg" alt="Login Illustration">
+    </div>
+
+    <!-- Right Form -->
+    <div class="form-container">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input type="email" id="email" placeholder="Enter email" required>
+        <input type="password" id="password" placeholder="Enter password" required>
+        <button type="submit">Login</button>
+        <p>Don't have an account? <a href="index.html">Sign up</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Supabase Auth -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+  const SUPABASE_URL = "https://yqcfgibzaideatrmvnvi.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxY2ZnaWJ6YWlkZWF0cm12bnZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk0MTk4ODEsImV4cCI6MjA3NDk5NTg4MX0.pRYlFcopxyDIuFattGFlciAzPSbR9m8KM4tOD-DqHno";
+
+  // Supabase client create cheyyali
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Login button click event
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      alert(error.message);
+    } else {
+      alert("Login successful!");
+      // Redirect to homepage
+      window.location.href = "homepage.html";
+    }
+  });
+</script>
+</body>
+</html>

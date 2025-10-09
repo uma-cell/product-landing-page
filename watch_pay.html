@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Payment Method</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffb6c1, #9370db); /* Pink to Purple gradient */
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      backdrop-filter: blur(5px);
+    }
+    .top-bar button {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .top-bar h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* Stepper */
+    .stepper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 15px 0;
+      font-size: 14px;
+      color: #fff;
+    }
+    .stepper .step {
+      display: flex;
+      align-items: center;
+      color: #fff;
+    }
+    .stepper .circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      color: #6f42c1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      margin: 0 5px;
+      font-weight: bold;
+    }
+    .stepper .line {
+      width: 40px;
+      height: 2px;
+      background: #fff;
+    }
+
+    /* Payment Methods */
+    .payment-container {
+      background: rgba(255, 255, 255, 0.9);
+      margin: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 15px;
+    }
+    .payment-container h3 {
+      margin-top: 0;
+      font-size: 16px;
+      margin-bottom: 15px;
+      color: #6f42c1;
+    }
+
+    .payment-option {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: 0.3s;
+      background: #fff;
+    }
+    .payment-option.selected {
+      border-color: #6f42c1;
+      background: #f3ebff;
+    }
+    .payment-option .left {
+      display: flex;
+      flex-direction: column;
+    }
+    .payment-option .left span {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .payment-option .left small {
+      color: green;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .payment-option .right input {
+      transform: scale(1.3);
+      cursor: pointer;
+    }
+
+    /* Place Order Section */
+    .place-order-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      backdrop-filter: blur(5px);
+    }
+    .place-order-bar .price {
+      font-size: 18px;
+      font-weight: 600;
+      color: #6f42c1;
+    }
+    .place-order-bar button {
+      background: #6f42c1;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .place-order-bar button:hover {
+      background: #5a2fa3;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <button onclick="history.back()">←</button>
+    <h2>Payment Method</h2>
+  </div>
+
+  <!-- Stepper -->
+  <div class="stepper">
+    <div class="step">
+      <div class="circle">1</div>
+      Review
+    </div>
+    <div class="line"></div>
+    <div class="step">
+      <div class="circle">2</div>
+      Payment
+    </div>
+  </div>
+
+  <!-- Payment Options -->
+  <div class="payment-container">
+    <h3>Select payment method</h3>
+
+    <div class="payment-option" onclick="selectOption('cod')">
+      <div class="left">
+        <span>₹1999 — Cash on Delivery</span>
+      </div>
+      <div class="right">
+        <input type="radio" name="payment" id="cod">
+      </div>
+    </div>
+
+    <div class="payment-option" onclick="selectOption('online')">
+      <div class="left">
+        <span>₹1999 — Pay Online</span>
+        <small>Save ₹199 with bank offers</small>
+      </div>
+      <div class="right">
+        <input type="radio" name="payment" id="online">
+      </div>
+    </div>
+  </div>
+
+  <!-- Place Order Bar -->
+  <div class="place-order-bar">
+    <div class="price">₹1999</div>
+    <button onclick="placeOrder()">Place Order</button>
+  </div>
+
+  <script>
+    let selectedMethod = "";
+
+    function selectOption(method) {
+      selectedMethod = method;
+
+      // remove all selected
+      document.querySelectorAll('.payment-option').forEach(opt => {
+        opt.classList.remove('selected');
+        opt.querySelector('input').checked = false;
+      });
+
+      // add selected
+      const chosen = document.getElementById(method).parentElement.parentElement;
+      chosen.classList.add('selected');
+      document.getElementById(method).checked = true;
+
+      // update price text
+      document.querySelector('.place-order-bar .price').innerText =
+        method === "online" ? "₹1800" : "₹1999";
+    }
+
+    function placeOrder() {
+      if (selectedMethod === "") {
+        alert("⚠ Please select a payment method");
+        return;
+      }
+     window.location.href = "watch_buy.html";
+      if (selectedMethod === "cod") {
+        alert("✅ Order placed with Cash on Delivery!");
+      } else {
+        alert("✅ Redirecting to online payment gateway...");
+      }
+    }
+  </script>
+
+</body>
+</html>

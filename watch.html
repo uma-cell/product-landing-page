@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Watch - Product Landing Page</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"/>
+
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+  <div class="left-section">
+     <!-- Back button redirects to homepage.html -->
+    <a href="homepage.html" class="back-button">&lt;</a>
+   </div>
+      <div class="logo">Smart<span>Watch</span></div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#buy">Buy Now</a></li>
+<div class="right-section">
+      <!-- Share button -->
+      <i class="fas fa-share-alt share-btn" id="shareBtn" title="Share"></i>
+    </div>
+       </ul>
+         </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1 class="fade-in">Next-Gen Smart Watch</h1>
+      <p class="slide-up">Stay connected, track fitness, and look stylish.</p>
+      <a href="#buy" class="btn bounce">Shop Now</a>
+    </div>
+    <div class="hero-image">
+      <img src="images/watch.png" alt="Smart Watch" />
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <h2>Features</h2>
+    <div class="feature-cards">
+      <div class="card zoom">
+        <img src="images/heart.png" alt="Heart Rate" />
+        <h3>Heart Monitoring</h3>
+        <p>Track your heartbeat in real-time.</p>
+      </div>
+      <div class="card zoom">
+        <img src="images/gps.png" alt="GPS" />
+        <h3>GPS Tracking</h3>
+        <p>Navigate and explore with built-in GPS.</p>
+      </div>
+      <div class="card zoom">
+        <img src="images/water.png" alt="Waterproof" />
+        <h3>Waterproof</h3>
+        <p>Designed to resist water & dust.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="about-text slide-left">
+      <h2>Why Choose Us?</h2>
+      <p>
+        Our smart watch combines premium design with powerful features.
+        Perfect for fitness lovers, tech enthusiasts, and trendsetters.
+      </p>
+    </div>
+    <div class="about-img slide-right">
+      <img src="images/about-watch.png" alt="About Smart Watch" />
+    </div>
+  </section>
+
+  <!-- Buy Section -->
+  <section id="buy" class="buy">
+    <h2>Get Yours Today</h2>
+    <p>Starting at just <span>1999/-</span></p>
+    <a href="watch_pay.html" class="btn pulse" id="buyBtn">Buy Now</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 SmartWatch Inc. All rights reserved.</p>
+  </footer>
+
+<script>
+  document.getElementById("shareBtn").addEventListener("click", async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "PinkPurple Phone",
+          text: "Check out this amazing PinkPurple Phone! 🚀📱",
+          url: "https://uma-cell.github.io/Product-Landing-Page/watch.html" // 👉 actual product link      
+        });
+      } catch (err) {
+        console.log("Share cancelled:", err);
+      }
+    } else {
+      alert("Sharing not supported on this browser.");
+    }
+  });
+</script>
+  </body>
+</html>
